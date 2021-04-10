@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_baseline_chevron_left_24" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Category"
+            android:textColor="#757677"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/category_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_back"
+            android:hint="Enter Category"
+            android:padding="15dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/button_back_active"
+            android:gravity="end"
+            android:padding="10dp"
+            android:text="Add"
+            android:textColor="#159EFF"
+            android:textSize="14dp"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:background="#FFFFFF"
+        android:divider="#F6F6F6"
+        android:dividerHeight="1dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+</LinearLayout>

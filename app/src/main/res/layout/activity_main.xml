@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="0dp"
+                    android:background="@drawable/button_back_active"
+                    android:gravity="end"
+                    android:padding="10dp"
+                    android:text="Sign in"
+                    android:textColor="#159EFF"
+                    android:textSize="14dp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Please fill-up below fields"
+                android:textColor="#757677"
+                android:textSize="11dp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_back"
+                android:hint="Email"
+                android:padding="15dp"
+                android:textSize="12dp" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_back"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="15dp"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/submit_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/page_button_back"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Submit"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
