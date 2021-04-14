@@ -1,8 +1,11 @@
 package com.example.bookadmin;
 
+import android.content.Intent;
+import android.media.Rating;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -42,7 +45,7 @@ public class RatingList extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new ReadJSON().execute("http://192.168.100.6/bookTest/book_list.php");
+                new ReadJSON().execute("http://192.168.100.5/bookTest/book_list.php");
             }
         });
     }
@@ -78,18 +81,22 @@ public class RatingList extends AppCompatActivity {
                     getApplicationContext(), R.layout.rating_item, arrayList
             );
             rating_list.setAdapter(adapter);
-//            category_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                    String id = arrayList.get(i).getId();
-//                    String category = arrayList.get(i).getCategory();
-//
-//                    Intent intent = new Intent(getBaseContext(), CategoryBooksPage.class);
-//                    intent.putExtra("id", id);
-//                    intent.putExtra("category", category);
-//                    startActivity(intent);
-//                }
-//            });
+            rating_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    String id = arrayList.get(i).getId();
+                    String categoryID = arrayList.get(i).getCategory_id();
+                    String categoryName = arrayList.get(i).getCategory_name();
+                    String bookName = arrayList.get(i).getBook_name();
+
+                    Intent intent = new Intent(getBaseContext(), RatingDetailsList.class);
+                    intent.putExtra("id", id);
+                    intent.putExtra("categoryID", categoryID);
+                    intent.putExtra("categoryName", categoryName);
+                    intent.putExtra("bookName", bookName);
+                    startActivity(intent);
+                }
+            });
         }
     }
 

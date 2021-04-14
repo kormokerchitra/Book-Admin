@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -23,26 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:text="User List"
+            android:text="View PDF"
             android:textColor="#757677"
             android:textSize="17dp"
             android:textStyle="bold" />
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#787878" />
-
-    <ListView
-        android:id="@+id/list_user"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="0dp"
-        android:background="#FFFFFF"
-        android:divider="#F6F6F6"
-        android:dividerHeight="1dp"
-        android:overScrollMode="never"
-        android:scrollbars="none" />
 </LinearLayout>

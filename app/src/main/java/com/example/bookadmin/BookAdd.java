@@ -1,12 +1,18 @@
 package com.example.bookadmin;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +20,25 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class BookAdd extends AppCompatActivity {
     //Pdf request code
@@ -24,6 +49,9 @@ public class BookAdd extends AppCompatActivity {
 
     //Uri to store the image uri
     private Uri filePath;
+    EditText catName, bookName;
+    TextView add;
+    String id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +75,16 @@ public class BookAdd extends AppCompatActivity {
         });
 
         requestStoragePermission();
+
+        catName = (EditText) findViewById(R.id.category_text);
+        bookName = (EditText) findViewById(R.id.book_name);
+        add = (TextView) findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadMultipart();
+            }
+        });
     }
 
     private void showFileChooser() {
@@ -56,6 +94,93 @@ public class BookAdd extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PICK_PDF_REQUEST);
     }
 
+    public void uploadMultipart() {
+        //getting name for the image
+        String book = bookName.getText().toString().trim();
+        String category = catName.getText().toString().trim();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.100.5/bookTest/category_finder.php",
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        String res = response.toString();
+                        Toast.makeText(BookAdd.this, res, Toast.LENGTH_SHORT).show();
+                        //Creating a shared preference
+                        if (res.contains("list")) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(res);
+                                JSONArray jsonArray = jsonObject.getJSONArray("list");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject productObject = jsonArray.getJSONObject(i);
+
+                                    id = productObject.getString("id");
+                                    Toast.makeText(BookAdd.this, id, Toast.LENGTH_SHORT).show();
+
+                                }
+                                //getting the actual path of the image
+                                String path = FilePath.getPath(BookAdd.this, filePath);
+
+                                if (path == null) {
+
+                                    Toast.makeText(BookAdd.this, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
+                                } else {
+                                    //Uploading code
+                                    try {
+                                        String uploadId = UUID.randomUUID().toString();
+
+                                        //Creating a multi part request
+                                        new MultipartUploadRequest(BookAdd.this, uploadId, "http://192.168.100.5/bookTest/file_upload.php")
+                                                .addFileToUpload(path, "pdf") //Adding file
+                                                .addParameter("book_name", book) //Adding text parameter to the request
+                                                .addParameter("category_id", id) //Adding text parameter to the request
+                                                .addParameter("category_name", category) //Adding text parameter to the request
+//                        .addParameter("name", category) //Adding text parameter to the request
+//                        .setNotificationConfig(new UploadNotificationConfig())
+                                                .setMaxRetries(5)
+                                                .startUpload();
+                                        Toast.makeText(BookAdd.this, "Uploaded successfully!", Toast.LENGTH_SHORT).show();//Starting the upload
+
+                                        Intent intent = new Intent(getBaseContext(), BookList.class);
+                                        startActivity(intent);
+
+                                    } catch (Exception exc) {
+                                        Toast.makeText(BookAdd.this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Toast.makeText(BookAdd.this, "Failed to get category!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //You can handle error here if you want
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                //Adding parameters to request
+                params.put("name", category);
+
+                //returning parameter
+                return params;
+            }
+        };
+
+        //Adding the string request to the queue
+        RequestQueue requestQueue = Volley.newRequestQueue(BookAdd.this);
+        requestQueue.add(stringRequest);
+
+
+    }
+
     //handling the image chooser activity result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -63,7 +188,7 @@ public class BookAdd extends AppCompatActivity {
 
         if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
-            Toast.makeText(this, filePath + "", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, filePath + "", Toast.LENGTH_SHORT).show();
         }
     }
 

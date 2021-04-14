@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,14 +22,22 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class GeetobitanList extends AppCompatActivity {
-    ArrayList<SongModel> arrayList;
-    ListView geetobitan_list;
+public class RatingDetailsList extends AppCompatActivity {
+    String catID, catName, bookName, id;
+    ArrayList<RatingDetailsModel> arrayList;
+    ListView rating_list;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.geetobitan_list);
+        setContentView(R.layout.rating_details_list);
+
+        id = getIntent().getStringExtra("id");
+        catID = getIntent().getStringExtra("categoryID");
+        catName = getIntent().getStringExtra("categoryName");
+        bookName = getIntent().getStringExtra("bookName");
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setText(bookName);
 
         ImageView back = (ImageView) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -37,26 +47,18 @@ public class GeetobitanList extends AppCompatActivity {
             }
         });
 
-        ImageView add = (ImageView) findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), GeetobitanAdd.class);
-                startActivity(intent);
-            }
-        });
+        rating_list = (ListView) findViewById(R.id.list_rating);
 
-        geetobitan_list = (ListView) findViewById(R.id.list_geetobitan);
         arrayList = new ArrayList<>();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new ReadJSONGeetobitanList().execute("http://192.168.100.5/bookTest/song_list.php");
+                new ReadJSON().execute("http://192.168.100.5/bookTest/review_list.php");
             }
         });
     }
 
-    class ReadJSONGeetobitanList extends AsyncTask<String, Integer, String> {
+    class ReadJSON extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -70,23 +72,40 @@ public class GeetobitanList extends AppCompatActivity {
                 JSONArray jsonArray = jsonObject.getJSONArray("list");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject productObject = jsonArray.getJSONObject(i);
-                    if (productObject.getString("song_category").equals("1")) {
-                        arrayList.add(new SongModel(
+                    if (id.equals(productObject.getString("book_id"))) {
+                        arrayList.add(new RatingDetailsModel(
                                 productObject.getString("id"),
-                                productObject.getString("song_name"),
-                                productObject.getString("song_pdf"),
-                                productObject.getString("song_category")
+                                productObject.getString("comment"),
+                                productObject.getString("review_person"),
+                                productObject.getString("review_date"),
+                                productObject.getString("rating"),
+                                productObject.getString("book_id")
                         ));
                     }
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            GeetobitanAdapter adapter = new GeetobitanAdapter(
-                    getApplicationContext(), R.layout.song_item, arrayList
+            RatingDetailsAdapter adapter = new RatingDetailsAdapter(
+                    getApplicationContext(), R.layout.rating_item, arrayList
             );
-            geetobitan_list.setAdapter(adapter);
+            rating_list.setAdapter(adapter);
+//            rating_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                    String id = arrayList.get(i).getId();
+//                    String categoryID = arrayList.get(i).getCategory_id();
+//                    String categoryName = arrayList.get(i).getCategory_name();
+//                    String bookName = arrayList.get(i).getBook_name();
+//
+//                    Intent intent = new Intent(getBaseContext(), RatingDetailsList.class);
+//                    intent.putExtra("id", id);
+//                    intent.putExtra("categoryID", categoryID);
+//                    intent.putExtra("categoryName", categoryName);
+//                    intent.putExtra("bookName", bookName);
+//                    startActivity(intent);
+//                }
+//            });
         }
     }
 

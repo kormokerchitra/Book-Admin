@@ -59,9 +59,9 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/delete"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:padding="5dp"
-        android:src="@drawable/ic_baseline_chevron_right_24" />
+        android:src="@drawable/ic_baseline_delete_24" />
 </LinearLayout>

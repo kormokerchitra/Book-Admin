@@ -27,13 +27,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class BookAdapter extends ArrayAdapter<BookModel> {
+public class GeetobitanAdapter extends ArrayAdapter<SongModel> {
 
-    ArrayList<BookModel> products;
+    ArrayList<SongModel> products;
     Context context;
     int resource;
 
-    public BookAdapter(Context context, int resource, ArrayList<BookModel> products) {
+    public GeetobitanAdapter(Context context, int resource, ArrayList<SongModel> products) {
         super(context, resource, products);
         this.products = products;
         this.context = context;
@@ -45,23 +45,18 @@ public class BookAdapter extends ArrayAdapter<BookModel> {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext()
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.book_item, null, true);
+            convertView = layoutInflater.inflate(R.layout.song_item, null, true);
 
         }
-        BookModel product = getItem(position);
+        SongModel product = getItem(position);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        TextView name = (TextView) convertView.findViewById(R.id.title); //type casting
-        String book_name = product.getBook_name();
-        name.setText(book_name);
+        TextView song = (TextView) convertView.findViewById(R.id.title); //type casting
+        String song_title = product.getSong_name();
+        song.setText(song_title);
 
-        TextView category = (TextView) convertView.findViewById(R.id.category); //type casting
-        String category_title = product.getCategory_name();
-        category.setText(category_title);
-
-        ImageView edit = (ImageView) convertView.findViewById(R.id.edit);
         ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,15 +68,15 @@ public class BookAdapter extends ArrayAdapter<BookModel> {
 
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.100.5/bookTest/delete_book.php");
+                    HttpPost httpPost = new HttpPost("http://192.168.100.5/bookTest/delete_song.php");
                     //httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpClient.execute(httpPost);
                     HttpEntity entity = response.getEntity();
                     is = entity.getContent();
-                    String msg = "Book Deleted Successfully";
+                    String msg = "Deleted Successfully";
                     Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(context, BookList.class);
+                    Intent intent = new Intent(context, GeetobitanList.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //add this line
                     context.startActivity(intent);
                 } catch (ClientProtocolException e) {
@@ -95,6 +90,4 @@ public class BookAdapter extends ArrayAdapter<BookModel> {
         });
         return convertView;
     }
-
-    ;
 }

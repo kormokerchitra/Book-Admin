@@ -52,6 +52,7 @@
         android:layout_height="30dp"
         android:layout_marginRight="5dp"
         android:padding="5dp"
+        android:visibility="gone"
         android:src="@drawable/ic_baseline_edit_24" />
 
     <ImageView

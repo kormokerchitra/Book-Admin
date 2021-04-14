@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:text="User List"
+            android:text="Book Name"
             android:textColor="#757677"
             android:textSize="17dp"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
         android:background="#787878" />
 
     <ListView
-        android:id="@+id/list_user"
+        android:id="@+id/list_rating"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="0dp"

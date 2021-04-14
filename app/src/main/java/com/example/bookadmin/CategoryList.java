@@ -74,7 +74,7 @@ public class CategoryList extends AppCompatActivity {
 
                     try {
                         HttpClient httpClient = new DefaultHttpClient();
-                        HttpPost httpPost = new HttpPost("http://192.168.100.6/bookTest/insert_category.php");
+                        HttpPost httpPost = new HttpPost("http://192.168.100.5/bookTest/insert_category.php");
                         //httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         HttpResponse response = httpClient.execute(httpPost);
@@ -103,7 +103,7 @@ public class CategoryList extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new ReadJSON().execute("http://192.168.100.6/bookTest/category_list.php");
+                new ReadJSON().execute("http://192.168.100.5/bookTest/category_list.php");
             }
         });
     }
@@ -134,18 +134,6 @@ public class CategoryList extends AppCompatActivity {
                     getApplicationContext(), R.layout.category_item, arrayList
             );
             category_list.setAdapter(adapter);
-//            category_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                    String id = arrayList.get(i).getId();
-//                    String category = arrayList.get(i).getCategory();
-//
-//                    Intent intent = new Intent(getBaseContext(), CategoryBooksPage.class);
-//                    intent.putExtra("id", id);
-//                    intent.putExtra("category", category);
-//                    startActivity(intent);
-//                }
-//            });
         }
     }
 
