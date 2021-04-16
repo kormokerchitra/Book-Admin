@@ -65,7 +65,7 @@ public class BookList extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new ReadJSON().execute("http://192.168.100.5/bookTest/book_list.php");
+                new ReadJSON().execute(IpConfig.ip + "bookTest/book_list.php");
             }
         });
     }

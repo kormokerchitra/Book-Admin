@@ -51,7 +51,7 @@ public class GeetobitanList extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new ReadJSONGeetobitanList().execute("http://192.168.100.5/bookTest/song_list.php");
+                new ReadJSONGeetobitanList().execute(IpConfig.ip + "bookTest/song_list.php");
             }
         });
     }

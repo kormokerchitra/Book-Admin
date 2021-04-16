@@ -74,7 +74,7 @@ public class CategoryList extends AppCompatActivity {
 
                     try {
                         HttpClient httpClient = new DefaultHttpClient();
-                        HttpPost httpPost = new HttpPost("http://192.168.100.5/bookTest/insert_category.php");
+                        HttpPost httpPost = new HttpPost(IpConfig.ip + "bookTest/insert_category.php");
                         //httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         HttpResponse response = httpClient.execute(httpPost);
@@ -103,7 +103,7 @@ public class CategoryList extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new ReadJSON().execute("http://192.168.100.5/bookTest/category_list.php");
+                new ReadJSON().execute(IpConfig.ip + "bookTest/category_list.php");
             }
         });
     }

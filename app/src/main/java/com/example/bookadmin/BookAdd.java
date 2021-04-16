@@ -98,7 +98,7 @@ public class BookAdd extends AppCompatActivity {
         //getting name for the image
         String book = bookName.getText().toString().trim();
         String category = catName.getText().toString().trim();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.100.5/bookTest/category_finder.php",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, IpConfig.ip + "bookTest/category_finder.php",
                 new Response.Listener<String>() {
 
                     @Override
@@ -130,7 +130,7 @@ public class BookAdd extends AppCompatActivity {
                                         String uploadId = UUID.randomUUID().toString();
 
                                         //Creating a multi part request
-                                        new MultipartUploadRequest(BookAdd.this, uploadId, "http://192.168.100.5/bookTest/file_upload.php")
+                                        new MultipartUploadRequest(BookAdd.this, uploadId, IpConfig.ip + "bookTest/file_upload.php")
                                                 .addFileToUpload(path, "pdf") //Adding file
                                                 .addParameter("book_name", book) //Adding text parameter to the request
                                                 .addParameter("category_id", id) //Adding text parameter to the request

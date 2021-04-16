@@ -42,7 +42,7 @@ public class UserList extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new ReadJSON().execute("http://192.168.100.5/bookTest/user_list.php");
+                new ReadJSON().execute(IpConfig.ip + "bookTest/user_list.php");
             }
         });
     }

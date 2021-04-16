@@ -64,7 +64,7 @@ public class CategoryEdit extends AppCompatActivity {
 
                     try {
                         HttpClient httpClient = new DefaultHttpClient();
-                        HttpPost httpPost = new HttpPost("http://192.168.100.5/bookTest/edit_category.php");
+                        HttpPost httpPost = new HttpPost(IpConfig.ip + "bookTest/edit_category.php");
                         //httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         HttpResponse response = httpClient.execute(httpPost);

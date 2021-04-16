@@ -91,7 +91,7 @@ public class GeetobitanAdd extends AppCompatActivity {
 
 
                 //Creating a multi part request
-                new MultipartUploadRequest(this, uploadId, "http://192.168.100.5/bookTest/song_upload.php")
+                new MultipartUploadRequest(this, uploadId, IpConfig.ip + "bookTest/song_upload.php")
                         .addFileToUpload(path, "pdf") //Adding file
                         .addParameter("song_name", book) //Adding text parameter to the request
                         .addParameter("song_category", cat_id) //Adding text parameter to the request

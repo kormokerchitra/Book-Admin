@@ -73,7 +73,7 @@ public class BookAdapter extends ArrayAdapter<BookModel> {
 
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.100.5/bookTest/delete_book.php");
+                    HttpPost httpPost = new HttpPost(IpConfig.ip + "bookTest/delete_book.php");
                     //httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpClient.execute(httpPost);

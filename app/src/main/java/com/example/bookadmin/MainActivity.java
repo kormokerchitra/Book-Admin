@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Password field is empty!", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.100.5/bookTest/login.php",
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, IpConfig.ip + "bookTest/login.php",
                             new Response.Listener<String>() {
 
                                 @Override

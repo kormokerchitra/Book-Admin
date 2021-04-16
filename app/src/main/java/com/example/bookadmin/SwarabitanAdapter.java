@@ -68,7 +68,7 @@ public class SwarabitanAdapter extends ArrayAdapter<SongModel> {
 
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.100.5/bookTest/delete_song.php");
+                    HttpPost httpPost = new HttpPost(IpConfig.ip + "bookTest/delete_song.php");
                     //httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpClient.execute(httpPost);
